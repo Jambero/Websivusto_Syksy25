@@ -1,11 +1,118 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WS05_Respo</title>
-</head>
-<body>
-    <h1>WS05_Respo</h1>
-</body>
+<html lang="fi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tervetuloa minun sivuilleni!</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+
+    <style>
+      h1 {
+        color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="responsive-nav">
+      <button class="menu-toggle">☰ Menu</button>
+      <ul class="nav-list">
+        <li><a href="#about">Tietoja minusta</a></li>
+        <li><a href="#services">Palvelut</a></li>
+        <li><a href="#contact">Yhteydenotto</a></li>
+      </ul>
+    </nav>
+    <header>
+      <button class="transition-button">Hover me</button>
+      <div class="animation-box"></div>
+      <h1 style="color: red">Jami</h1>
+      <p>Utelijas tutkiskelija.</p>
+      <img
+        src="images/Jami_30.10.jpg"
+        alt="Mie_ihan_ite"
+        class="filter-image"
+      />
+      <blockquote class="quote">Tukka takana, elämä edessä</blockquote>
+    </header>
+
+    <main>
+      <ul class="pseudo-list">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+      </ul>
+      <section id="about">
+        <h2>Harrastuksiini kuuluvat</h2>
+        <ul>
+          <li>Pelaaminen</li>
+          <li>Moottorikulkuneuvot</li>
+          <li>Musiikki</li>
+        </ul>
+
+        <a href="https://www.youtube.com/">YouTube</a>
+
+        <table>
+          <tr>
+            <th>Lemppari pelit</th>
+            <th>Lemppari musiikki genret</th>
+          </tr>
+          <tr>
+            <td>Counter Strike 2</td>
+            <td>Alternative metal</td>
+          </tr>
+          <tr>
+            <td>League of Legends</td>
+            <td>Rap</td>
+          </tr>
+          <tr>
+            <td>Dota 2</td>
+            <td>Hardstyle</td>
+          </tr>
+        </table>
+      </section>
+      <section id="services">
+        <div class="flex-container">
+          <div class="box">Box 1</div>
+          <div class="box">Box 2</div>
+          <div class="box">Box 3</div>
+        </div>
+        <div class="grid-container">
+          <div class="grid-item">1</div>
+          <div class="grid-item">2</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item">4</div>
+          <div class="grid-item">5</div>
+          <div class="grid-item">6</div>
+        </div>
+        <div class="responsive-box">Resize the window to see the effect</div>
+        <div class="responsive-container">
+      <div class="column">Column 1</div>
+      <div class="column">Column 2</div>
+    </div>
+
+    <img src="images/IMG_20190723_205838.jpg" alt="Responsive Image" class="responsive-image">
+
+    <div class="media-query-box">Resize the window to see the effect</div>
+      </section>
+
+      <div class="content-box">
+  <h3>Sample Heading</h3>
+  <p>This is a sample paragraph inside a div element.</p>
+</div>
+
+      <form>
+        <section id="contact">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" /><br /><br />
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" /><br /><br />
+          <input type="submit" value="Submit" />
+        </section>
+      </form>
+    </main>
+    <footer>
+      <p>Copyright 2025</p>
+    </footer>
+  </body>
 </html>
