@@ -1,11 +1,624 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WS07_Projektityo</title>
+    <title>League of Legends - Etusivu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1428 0%, #1a2332 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(10, 20, 40, 0.95);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #c89b3c;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #c89b3c;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            background: rgba(200, 155, 60, 0.2);
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px #c89b3c;
+        }
+
+        nav a.active {
+            background: rgba(200, 155, 60, 0.3);
+            border-bottom: 3px solid #c89b3c;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, rgba(10, 20, 40, 0.8) 0%, rgba(26, 35, 50, 0.6) 100%);
+            border-bottom: 3px solid #c89b3c;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #c89b3c;
+            text-shadow: 0 0 20px rgba(200, 155, 60, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(200, 155, 60, 0.5); }
+            to { text-shadow: 0 0 30px rgba(200, 155, 60, 0.8); }
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .content-section {
+            background: rgba(20, 30, 50, 0.7);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(200, 155, 60, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(200, 155, 60, 0.2);
+        }
+
+        h2 {
+            color: #c89b3c;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #c89b3c;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #d4af37;
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        /* Images */
+        .champion-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .champion-img, .tournament-img {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #2a3342 0%, #1a2332 100%);
+            border: 2px solid #c89b3c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c89b3c;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .champion-img:hover, .tournament-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(200, 155, 60, 0.4);
+            border-color: #d4af37;
+        }
+
+        .tournament-img {
+            height: 300px;
+        }
+
+        /* Cards Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #1a2332 0%, #0a1428 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #c89b3c;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(200, 155, 60, 0.4);
+            border-color: #d4af37;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #c89b3c;
+        }
+
+        /* Champion Cards */
+        .champion-card {
+            background: linear-gradient(135deg, #1a2332 0%, #2a3342 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid #5383e8;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .champion-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(83, 131, 232, 0.5);
+            border-color: #6c9fff;
+        }
+
+        .champion-card h3 {
+            color: #5383e8;
+            margin-top: 0;
+        }
+
+        .role-badge {
+            display: inline-block;
+            background: rgba(83, 131, 232, 0.3);
+            color: #6c9fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            background: rgba(30, 40, 60, 0.8);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #c89b3c;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            background: rgba(40, 50, 70, 0.9);
+            border-left-width: 6px;
+            transform: translateX(10px);
+        }
+
+        .timeline-year {
+            color: #c89b3c;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Team Cards */
+        .team-card {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2a1a3a 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid #c89b3c;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(200, 155, 60, 0.4);
+        }
+
+        .team-card h3 {
+            color: #c89b3c;
+            margin-top: 0;
+        }
+
+        .region-badge {
+            display: inline-block;
+            background: rgba(200, 155, 60, 0.3);
+            color: #c89b3c;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 20, 40, 0.95);
+            color: #808080;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid #c89b3c;
+        }
+
+        footer p {
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #c89b3c 0%, #d4af37 100%);
+            color: #0a1428;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(200, 155, 60, 0.5);
+            background: linear-gradient(135deg, #d4af37 0%, #e0c050 100%);
+        }
+
+        /* Lists */
+        ul {
+            list-style-position: inside;
+            margin: 1rem 0;
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 1rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>WS07_Projektityo</h1>
+    <nav>
+        <ul>
+            <li><a href="#etusivu" class="active">Etusivu</a></li>
+            <li><a href="#champions">Sankarit</a></li>
+            <li><a href="#historia">Historia</a></li>
+            <li><a href="#proteams">Pro Joukkueet</a></li>
+        </ul>
+    </nav>
+
+    <!-- ETUSIVU -->
+    <div id="etusivu">
+        <header>
+            <h1>LEAGUE OF LEGENDS</h1>
+        </header>
+
+        <main>
+            <div class="content-section">
+                <h2>Mikä on League of Legends?</h2>
+                <p>League of Legends (LoL) on Riot Gamesin kehittämä ja julkaisema ilmainen moninpeli online-taisteluareena (MOBA) -videopeli. Peli julkaistiin lokakuussa 2009, ja siitä on kasvanut yksi maailman suosituimmista ja kilpailullisimmista videopeleistä.</p>
+                <p>Pelissä kaksi viiden pelaajan joukkuetta taistelevat toisiaan vastaan tavoitteenaan tuhota vastustajan päätukikohta, "Nexus". Jokainen pelaaja ohjaa yksilöllistä sankaria, jolla on ainutlaatuiset kyvyt ja pelityylit.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Keskeiset Ominaisuudet</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>160+ Sankaria</h3>
+                        <p>Valtava valikoima pelattavia hahmoja, joilla on ainutlaatuiset kyvyt ja taustatarinat.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Strateginen Pelaaminen</h3>
+                        <p>Yhdistää toimintaa, strategiaa ja tiimityötä intensiivisissä 5v5-otteluissa.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Kilpailullinen Sarja</h3>
+                        <p>Rankkauspelitilat ja ammattimaiset esports-turnaukset miljoonien palkintorahojen kanssa.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Säännölliset Päivitykset</h3>
+                        <p>Jatkuva kehitys uusilla sankareilla, ominaisuuksilla ja tasapainotuksilla.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Pelimuodot</h2>
+                <h3>Summoner's Rift</h3>
+                <p>Pääasiallinen 5v5-kartta, jossa tavoitteena on työskennellä tiimisi kanssa tuhotaksesi vastustajan Nexus. Ottelu kestää tyypillisesti 25-45 minuuttia.</p>
+                
+                <h3>ARAM (All Random All Mid)</h3>
+                <p>Nopeatempoisempi pelimuoto, jossa pelaajat saavat satunnaisen sankarin ja taistelevat yhdellä linjalla.</p>
+                
+                <h3>Rankkapeli</h3>
+                <p>Kilpailullinen pelimuoto, jossa pelaajat voivat nousta eri divisioonien läpi osoittaakseen taitojaan.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- CHAMPIONS SIVU -->
+    <div id="champions" style="display: none;">
+        <header>
+            <h1>SANKARIT</h1>
+        </header>
+
+        <main>
+            <div class="content-section">
+                <h2>Sankarit League of Legendsissa</h2>
+                <p>League of Legends sisältää yli 160 ainutlaatuista sankaria, joista jokainen tarjoaa oman pelityylinsä ja strategiansa. Sankarit jaetaan eri rooleihin ja luokkiin perustuen heidän kykyihinsä ja pelityyliinsä.</p>
+                
+                <div class="champion-images">
+                    <div class="champion-img">
+                        <span>Yasuo - Tuulen Vartija</span>
+                    </div>
+                    <div class="champion-img">
+                        <span>Ahri - Yhdeksänhäntäinen Kettu</span>
+                    </div>
+                    <div class="champion-img">
+                        <span>Jinx - Löysä Kanuuna</span>
+                    </div>
+                    <div class="champion-img">
+                        <span>Lee Sin - Sokea Munkki</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Sankariluokat</h2>
+                <div class="card-grid">
+                    <div class="champion-card">
+                        <h3>Assassin</h3>
+                        <span class="role-badge">Salamurhaamat</span>
+                        <p>Nopeat ja ketterät sankarit, jotka erikoistuvat yksittäisten kohteiden tuhoamiseen. Esimerkiksi: Zed, Akali, Katarina, Talon.</p>
+                    </div>
+                    <div class="champion-card">
+                        <h3>Mage</h3>
+                        <span class="role-badge">Taikurit</span>
+                        <p>Loitsuvoimaa käyttävät sankarit, jotka aiheuttavat valtavia vahinkoja taikuudella. Esimerkiksi: Lux, Ahri, Syndra, Orianna.</p>
+                    </div>
+                    <div class="champion-card">
+                        <h3>Tank</h3>
+                        <span class="role-badge">Tankki</span>
+                        <p>Kestävät sankarit, jotka suojelevat tiimiään ja ottavat vahinkoa vastaan. Esimerkiksi: Malphite, Ornn, Sion, Maokai.</p>
+                    </div>
+                    <div class="champion-card">
+                        <h3>Bruiser</h3>
+                        <span class="role-badge">Soturi</span>
+                        <p>Tasapainoinen yhdistelmä vahinkoa ja kestävyyttä lähitaistelussa. Esimerkiksi: Darius, Garen, Jax, Irelia.</p>
+                    </div>
+                    <div class="champion-card">
+                        <h3>Support</h3>
+                        <span class="role-badge">Tuki</span>
+                        <p>Sankarit, jotka auttavat ja vahvistavat tiimitovereitaan sekä suojelevat heitä. Esimerkiksi: Thresh, Lulu, Soraka, Leona.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Sankarien Valinta</h2>
+                <p>Oikean sankarin valinta riippuu monista tekijöistä:</p>
+                <ul>
+                    <li><strong>Pelityyli:</strong> Pidätkö aggressiivisesta vai puolustavasta pelaamisesta?</li>
+                    <li><strong>Rooli:</strong> Mikä positio tiimissä sinua kiinnostaa?</li>
+                    <li><strong>Vaikeustaso:</strong> Aloittelijoille suositellaan yksinkertaisempia sankareita</li>
+                    <li><strong>Tiimin koostumus:</strong> Sankarien tulee täydentää toisiaan</li>
+                </ul>
+                <a href="#" class="btn">Tutustu Kaikkiin Sankareihin</a>
+            </div>
+        </main>
+    </div>
+
+    <!-- HISTORIA SIVU -->
+    <div id="historia" style="display: none;">
+        <header>
+            <h1>PELIN HISTORIA</h1>
+        </header>
+
+        <main>
+            <div class="content-section">
+                <h2>League of Legendsin Kehitys</h2>
+                <p>League of Legends syntyi intohimosta luoda parempi MOBA-kokemus. Riot Gamesin perustajat, Brandon "Ryze" Beck ja Marc "Tryndamere" Merrill, halusivat kehittää pelin, joka keskittyisi pelaajiin ja yhteisöön.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Aikajana</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2006</div>
+                        <p>Riot Games perustettiin Los Angelesissa, Kaliforniassa. Yrityksen missiona oli luoda pelaajiin keskittyvä peliyhtiö.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2008</div>
+                        <p>League of Legends julkistettiin ensimmäisen kerran julkisuudessa. Peli oli vielä kehitysvaiheessa, mutta se herätti välitöntä kiinnostusta MOBA-yhteisössä.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2009 - Lokakuu</div>
+                        <p>League of Legends julkaistiin virallisesti. Peli alkoi 40 sankarilla ja yhdellä kartalla, Summoner's Rift. Vastaanotto oli positiivinen, ja pelaajamäärät kasvoivat nopeasti.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2011</div>
+                        <p>Ensimmäinen World Championship -turnaus järjestettiin Dreamhackissa Ruotsissa. Palkintopotti oli 100 000 dollaria, ja turnauksen voitti joukkue Fnatic.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2013</div>
+                        <p>League of Legends saavutti 32 miljoonaa aktiivista kuukausipelaajaa ja nousi maailman suosituimmaksi PC-peliksi. LCS (League Championship Series) perustettiin Pohjois-Amerikkaan ja Eurooppaan.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2016</div>
+                        <p>Peli saavutti 100 miljoonaa kuukausittaista aktiivista pelaajaa. World Championship -finaalit pidettiin loppuunmyydyssä Staples Centerissä Los Angelesissa.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2019</div>
+                        <p>Pelin 10-vuotisjuhlan kunniaksi Riot Games julkisti useita uusia projekteja, mukaan lukien Teamfight Tactics, Legends of Runeterra ja Valorant. World Championship -finaaleja katsoi yli 44 miljoonaa katsojaa samanaikaisesti.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2021</div>
+                        <p>Netflix-sarja "Arcane" julkaistiin, kertoen tarinoita League of Legendsin maailmasta. Sarja sai valtavaa kriittistä kiitosta ja voitti useita palkintoja.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2023-2024</div>
+                        <p>League of Legends jatkaa kasvuaan globaalina ilmiönä. Peli sisältää nyt yli 160 sankaria, ja esports-ekosysteemi on kasvanut valtavaksi teollisuudeksi miljoonien dollareiden palkintorahoilla.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Vaikutus Peliteollisuuteen</h2>
+                <p>League of Legends on muovannut peliteollisuutta monin tavoin:</p>
+                <ul>
+                    <li><strong>Esports-vallankumous:</strong> LoL auttoi tekemään esportsista valtavirtailmiön miljoonien katsojien ja valtavien palkintopotin kanssa</li>
+                    <li><strong>Free-to-play malli:</strong> Todisti, että vapaa peruspeli kosmeettisilla ostoksilla voi olla kannattava liiketoimintamalli</li>
+                    <li><strong>Yhteisölähtöinen kehitys:</strong> Asetti standardin pelaajien kuuntelemiselle ja säännöllisille päivityksille</li>
+                    <li><strong>Maailmanlaajuinen kulttuuri:</strong> Loi globaalin yhteisön, joka ylittää kulttuuriset ja kielelliset rajat</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <!-- PRO JOUKKUEET SIVU -->
+    <div id="proteams" style="display: none;">
+        <header>
+            <h1>PRO JOUKKUEET</h1>
+        </header>
+
+        <main>
+            <div class="content-section">
+                <h2>League of Legends Esports</h2>
+                <p>League of Legends on yksi maailman suurimmista esports-peleistä. Ammattilaisjoukkueet kilpailevat ympäri maailmaa alueellisissa liigoissa ja kansainvälisissä turnauksissa. World Championship on vuoden suurin tapahtuma, jossa parhaat joukkueet jokaiselta alueelta kamppailevat maailmanmestaruudesta.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Menestyneitä Joukkueita</h2>
+                <div class="card-grid">
+                    <div class="team-card">
+                        <h3>T1</h3>
+                        <span class="region-badge">LCK (Korea)</span>
+                        <p>Yksi historian menestyneimmistä joukkueista. T1 on voittanut World Championshipin useita kertoja ja on legendaarisen pelaajan "Faker" kotijoukkue.</p>
+                        <p><strong>Saavutukset:</strong> 4x World Champion, 10+ LCK-mestaruutta</p>
+                    </div>
+
+                    <div class="team-card">
+                        <h3>G2 Esports</h3>
+                        <span class="region-badge">LEC (Eurooppa)</span>
+                        <p>Euroopan dominoivin joukkue 2010-luvun lopulla. Tunnettu innovatiivisesta pelityylistään ja kansainvälisestä menestyksestään.</p>
+                        <p><strong>Saavutukset:</strong> MSI 2019 voittaja, 9x LEC-mestari</p>
+                    </div>
+
+                    <div class="team-card">
+                        <h3>Fnatic</h3>
+                        <span class="region-badge">LEC (Eurooppa)</span>
+                        <p>Ensimmäinen World Championship -voittaja vuonna 2011. Yksi vanhimmista ja arvostetuimmista organisaatioista League of Legends -skenessä.</p>
+                        <p><strong>Saavutukset:</strong> Season 1 World Champion, 8x LEC-mestari</p>
+                    </div>
+
+                    <div class="team-card">
+                        <h3>EDward Gaming</h3>
+                        <span class="region-badge">LPL (Kiina)</span>
+                        <p>Kiinalainen voimanpesä, joka voitti ensimmäisen World Championship -tittelinsä vuonna 2021. Tunnettu vahvasta tiimipelaamisestaan.</p>
+                        <p><strong>Saavutukset:</strong> 2021 World Champion, 3x LPL-mestari</p>
+                    </div>
+
+                    <div class="team-card">
+                        <h3>Cloud9</h3>
+                        <span class="region-badge">LCS (Pohjois-Amerikka)</span>
+                        <p>Pohjois-Amerikan menestyneimpiä joukkueita sekä kotimaassa että kansainvälisesti. Tunnettu kyvystään kehittää uusia lahjakkuuksia.</p>
+                        <p><strong>Saavutukset:</strong> 3x LCS-mestari, useita semifinaaleja Worldsissa</p>
+                    </div>
+
+                    <div class="team-card">
+                        <h3>Gen.G</h3>
+                        <span class="region-badge">LCK (Korea)</span>
+                        <p>Korealainen huippujoukkue, joka voitti World Championshipin 2017 Samsung Galaxy -nimellä. Jatkuvasti yksi LCK:n vahvimmista joukkueista.</p>
+                        <p><strong>Saavutukset:</strong> 2017 World Champion, useita LCK-titteleitä</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Historialliset Turnaushetket</h2>
+                <div class="champion-images">
+                    <div class="tournament-img">
+                        <span>2019 Worlds Finals - Pariisi<br>Vastaanottorakennus Accor Arena</span>
+                    </div>
+                    <div class="tournament-img">
+                        <span>2021 Worlds Finals - Reykjavik<br>EDG vs DK Finaalit</span>
+                    </div>
+                    <div class="tournament-img">
+                        <span>MSI 2019 - Taipei<br>G2 Esports Historian Voitto</span>
+                    </div>
+                    <div class="tournament-img">
+                        <span>2023 Worlds Finals - Seoul<br>Kotiyleisö Kannustaa T1:tä</span>
+    </script>
 </body>
 </html>
