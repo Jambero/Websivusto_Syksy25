@@ -619,6 +619,72 @@
                     </div>
                     <div class="tournament-img">
                         <span>2023 Worlds Finals - Seoul<br>Kotiyleisö Kannustaa T1:tä</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Alueelliset Liigat</h2>
+                <h3>LCK - League of Legends Champions Korea</h3>
+                <p>Korealainen liiga tunnetaan korkeasta taitotasostaan ja strategisesta pelaamisestaan. Moni maailman parhaista pelaajista on kotoisin LCK:sta.</p>
+
+                <h3>LPL - League of Legends Pro League</h3>
+                <p>Kiinan liiga on kasvanut maailman vahvimmaksi alueeksi. LPL-joukkueet ovat voittaneet useita viimeaikaisia World Championship -titteleitä.</p>
+
+                <h3>LEC - League of Legends EMEA Championship</h3>
+                <p>Euroopan liiga yhdistää pelaajia Euroopasta, Lähi-idästä ja Afrikasta. Tunnettu luovasta pelityylistään ja vahvasta fanien tuesta.</p>
+
+                <h3>LCS - League of Legends Championship Series</h3>
+                <p>Pohjois-Amerikan liiga, jossa kilpailevat parhaat joukkueet USA:sta ja Kanadasta. Liiga on tunnettu show-elementeistään ja viihteellisyydestään.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>World Championship</h2>
+                <p>World Championship on League of Legendsin suurin vuosittainen tapahtuma, jossa alueellisten liigojen parhaat joukkueet kohtaavat. Turnaus kestää noin kuukauden ja huipentuu suureen finaaliin, jota katsovat miljoonat ympäri maailmaa.</p>
+                <p>Palkintopotti on kasvanut vuosien varrella, ja nykyään se ylittää useita miljoonia dollareita. Vuoden 2023 World Championship -finaalien katsojaluku rikkoi jälleen ennätyksiä yli 6,4 miljoonalla samanaikaisella katsojalla.</p>
+                <a href="#" class="btn">Seuraa Esports-tapahtumia</a>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 League of Legends Fan-sivu. Ei virallinen Riot Games -sivusto.</p>
+        <p>League of Legends ja Riot Games ovat Riot Games, Inc:n tavaramerkkejä.</p>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        const navLinks = document.querySelectorAll('nav a');
+        const pages = {
+            'etusivu': document.getElementById('etusivu'),
+            'champions': document.getElementById('champions'),
+            'historia': document.getElementById('historia'),
+            'proteams': document.getElementById('proteams')
+        };
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Hide all pages
+                Object.values(pages).forEach(page => {
+                    page.style.display = 'none';
+                });
+                
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                
+                // Show selected page
+                const pageId = link.getAttribute('href').substring(1);
+                pages[pageId].style.display = 'block';
+                
+                // Add active class to current link
+                link.classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>
